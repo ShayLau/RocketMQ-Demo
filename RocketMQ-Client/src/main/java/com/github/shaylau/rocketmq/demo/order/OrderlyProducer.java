@@ -3,9 +3,7 @@ package com.github.shaylau.rocketmq.demo.order;
 import com.github.shaylau.rocketmq.demo.common.Constants;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
-import org.apache.rocketmq.client.producer.DefaultMQProducer;
-import org.apache.rocketmq.client.producer.MessageQueueSelector;
-import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.client.producer.*;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageQueue;
 import org.apache.rocketmq.remoting.exception.RemotingException;
@@ -25,19 +23,23 @@ public class OrderlyProducer {
 
         OrderlyProducer orderlyProducer = new OrderlyProducer();
         List<OrderStep> messageList = orderlyProducer.buildOrders();
-
+        //消息生产者对象
         DefaultMQProducer messageProducer = new DefaultMQProducer("producer-group");
-
+        messageProducer.setDefaultTopicQueueNums(4);
         messageProducer.setNamesrvAddr(Constants.nameSrv);
+        //启动生产者
         messageProducer.start();
+        System.out.println("message queue size :" + messageProducer.getDefaultTopicQueueNums());
         LocalDateTime localDateTime = LocalDateTime.now();
         String[] tags = new String[]{"TagB", "TagC", "TagD"};
         for (int i = 0; i < messageList.size(); i++) {
+            //准备消息
             OrderStep orderStep = messageList.get(i);
             //消息体：当前时间+Hello RocketMQ + orderStep信息
             String messageBody = localDateTime + ",Hello RocketMQ" + orderStep;
-            Message message = new Message("broker-a", tags[i % tags.length], "Key" + i, messageBody.getBytes());
+            Message message = new Message("Order", tags[i % tags.length], "Key" + i, messageBody.getBytes());
             try {
+                //发送消息
                 SendResult sendResult = messageProducer.send(message, new MessageQueueSelector() {
                     /**
                      *
@@ -47,8 +49,7 @@ public class OrderlyProducer {
                      * @return
                      */
                     @Override
-                        public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
-                        System.out.println(mqs.size());
+                    public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
                         Long orderId = (Long) arg;
                         long index = orderId % mqs.size();
                         return mqs.get((int) index);
@@ -67,7 +68,6 @@ public class OrderlyProducer {
                 e.printStackTrace();
             }
         }
-
         messageProducer.shutdown();
     }
 
@@ -107,7 +107,6 @@ public class OrderlyProducer {
 
         orderDemo = new OrderStep(15103111039L, "完成");
         orderList.add(orderDemo);
-
         return orderList;
     }
 

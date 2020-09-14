@@ -29,7 +29,7 @@ public class OrderlyConsumer {
          * 如果非第一次启动，那么按照上次消费的位置继续消费
          */
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
-        consumer.subscribe("broker-a", "TagB ||TagC || TagD");
+        consumer.subscribe("Order", "TagB ||TagC || TagD");
         Random random = new Random();
         consumer.registerMessageListener(new MessageListenerOrderly() {
 
