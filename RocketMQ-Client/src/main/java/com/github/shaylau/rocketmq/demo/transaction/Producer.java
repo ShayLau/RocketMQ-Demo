@@ -1,6 +1,7 @@
 package com.github.shaylau.rocketmq.demo.transaction;
 
 import com.github.shaylau.rocketmq.demo.common.Constants;
+import com.github.shaylau.rocketmq.demo.common.OrderStatusEnum;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.LocalTransactionState;
 import org.apache.rocketmq.client.producer.TransactionListener;
