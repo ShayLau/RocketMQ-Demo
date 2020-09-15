@@ -1,4 +1,4 @@
-package com.github.shaylau.rocketmq.demo.transaction;
+package com.github.shaylau.rocketmq.integration.common.enums;
 
 /**
  * 订单状态枚举
