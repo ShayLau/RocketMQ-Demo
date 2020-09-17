@@ -1,0 +1,21 @@
+server:
+  port: 9200
+spring:
+  cloud:
+    stream:
+      rocketmq:
+        binder:
+          name-server: 127.0.0.1:9876
+        #具体配置的 RocketMQ 的消费者 Binding、生产者 Binding
+      bindings:
+        #接受管道信息
+        input:
+          destination: topic-product
+          content-type: application/json
+          group: distributed-group
+        #输入管道信息
+        output:
+          destination: topic-order
+          content-type: application/json
+          group: distributed-group
+
