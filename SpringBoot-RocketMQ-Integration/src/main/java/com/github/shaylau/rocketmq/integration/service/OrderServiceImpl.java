@@ -41,7 +41,6 @@ public class OrderServiceImpl implements OrderService {
         //创建订单逻辑
         //.....
         //发送事务订单
-        SendStatus sendStatus = orderMessageProducer.transactionOrderMessage(order);
-        log.info("发送事务订单：" + sendStatus);
+        orderMessageProducer.transactionOrderMessage(order);
     }
 }
