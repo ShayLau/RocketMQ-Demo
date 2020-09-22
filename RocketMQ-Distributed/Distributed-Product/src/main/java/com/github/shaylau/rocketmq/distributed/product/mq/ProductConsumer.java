@@ -13,11 +13,22 @@ public class ProductConsumer {
 
 
     /**
+     * 消费库存消息
+     *
+     * @param object 库存消息体
+     */
+    @StreamListener("Topic-stock")
+    public void consumerForStock(Object object) {
+        System.out.println("收到库存消息：" + object);
+    }
+
+
+    /**
      * 消费订单消息
      *
      * @param object 订单消息体
      */
-    @StreamListener(Sink.INPUT)
+    @StreamListener("Topic-order")
     public void consumerForOrder(Object object) {
         System.out.println("收到订单消息：" + object);
     }

@@ -18,4 +18,15 @@ spring:
           destination: topic-order
           content-type: application/json
           group: distributed-group
-
+        Topic-product:
+          destination: Topic-product
+          content-type: application/json
+          group: distributed-group2
+        Topic-order:
+          destination: Topic-order
+          content-type: application/json
+          group: distributed-group2
+        Topic-stock:
+          destination: Topic-stock
+          content-type: application/json
+          group: distributed-group2

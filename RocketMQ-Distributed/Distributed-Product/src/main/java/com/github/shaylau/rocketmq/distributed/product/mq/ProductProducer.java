@@ -1,8 +1,8 @@
 package com.github.shaylau.rocketmq.distributed.product.mq;
 
 import com.github.shaylau.rocketmq.distributed.product.model.Product;
+import com.github.shaylau.rocketmq.distributed.product.mq.binder.CustomChannelBinder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
@@ -19,15 +19,37 @@ public class ProductProducer {
     @Autowired
     private Source source;
 
+    @Autowired
+    private CustomChannelBinder channelBinder;
+
+
+    /**
+     * 发送消息
+     *
+     * @param product
+     */
+    public void send(Product product) {
+        Message<Product> message = MessageBuilder.withPayload(product).build();
+        source.output().send(message);
+    }
 
     /**
      * 发送消息到订单
-     *
      * @param product
      */
     public void sendToOrder(Product product) {
         Message<Product> message = MessageBuilder.withPayload(product).build();
-        source.output().send(message);
+        channelBinder.sendToOrderChannel().send(message);
     }
+
+    /**
+     * 发送消息到订单
+     * @param product
+     */
+    public void sentToStock(Product product) {
+        Message<Product> message = MessageBuilder.withPayload(product).build();
+        channelBinder.sendToStockChannel().send(message);
+    }
+
 
 }

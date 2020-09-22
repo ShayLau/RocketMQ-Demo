@@ -1,5 +1,6 @@
 package com.github.shaylau.rocketmq.distributed.product;
 
+import com.github.shaylau.rocketmq.distributed.product.mq.binder.CustomChannelBinder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -12,7 +13,7 @@ import org.springframework.cloud.stream.messaging.Source;
  * @author ShayLau
  * @date 2020/9/17 11:22 上午
  */
-@EnableBinding({Sink.class,Source.class})
+@EnableBinding({Sink.class, Source.class, CustomChannelBinder.class})
 @SpringBootApplication
 public class ProductApplication {
     public static void main(String[] args) {

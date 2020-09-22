@@ -1,6 +1,9 @@
 package com.github.shaylau.rocketmq.distributed.product.service.impl;
 
+import com.github.shaylau.rocketmq.distributed.product.model.Product;
+import com.github.shaylau.rocketmq.distributed.product.mq.ProductProducer;
 import com.github.shaylau.rocketmq.distributed.product.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,4 +14,12 @@ import org.springframework.stereotype.Service;
 public class ProductServiceImpl implements ProductService {
 
 
+    @Autowired
+    private ProductProducer productProducer;
+
+
+    @Override
+    public void productStockUpdate(Product product) {
+        productProducer.sentToStock(product);
+    }
 }
