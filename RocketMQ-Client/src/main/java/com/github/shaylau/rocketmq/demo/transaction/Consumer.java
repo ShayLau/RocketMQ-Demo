@@ -19,6 +19,8 @@ public class Consumer {
         consumer.setNamesrvAddr(Constants.nameSrv);
         //订阅事务消息
         consumer.subscribe("transaction", "*");
+
+
         consumer.registerMessageListener((MessageListenerOrderly) (msgs, context) -> {
             msgs.stream().forEach(messageExt -> {
                 System.out.println("consumeThread=" + Thread.currentThread().getName() +
@@ -26,6 +28,7 @@ public class Consumer {
             });
             return ConsumeOrderlyStatus.SUCCESS;
         });
+
         consumer.start();
 
     }

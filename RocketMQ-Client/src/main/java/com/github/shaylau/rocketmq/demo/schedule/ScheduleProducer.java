@@ -25,9 +25,11 @@ public class ScheduleProducer {
         messageProducer.start();
         String messageBody = "This is delay schedule message";
         Message message = new Message("broker-a", "schedule-tag-1", "Key", messageBody.getBytes());
+
         //延迟消息级别
         //private String messageDelayLevel = "1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h";
         message.setDelayTimeLevel(3);
+
         System.out.println("开始发送消息：" + LocalDateTime.now());
         messageProducer.send(message);
         messageProducer.shutdown();

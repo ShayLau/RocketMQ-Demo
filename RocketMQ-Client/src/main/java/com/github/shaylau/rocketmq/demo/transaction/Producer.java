@@ -24,6 +24,7 @@ public class Producer {
         TransactionMQProducer transactionMQProducer = new TransactionMQProducer("defaultGroup");
         //设置注册中心 Namerv 地址
         transactionMQProducer.setNamesrvAddr(Constants.nameSrv);
+
         //设置事务监听器
         transactionMQProducer.setTransactionListener(new TransactionListener() {
             @Override
@@ -31,9 +32,11 @@ public class Producer {
                 //订单完成则提交事务
                 if (arg.equals(OrderStatusEnum.COMPLETE)) {
                     return LocalTransactionState.COMMIT_MESSAGE;
+
                 } else if (arg.equals(OrderStatusEnum.ERROR)) {
                     //订单失败这回滚事务
                     return LocalTransactionState.ROLLBACK_MESSAGE;
+
                 } else {
                     return LocalTransactionState.UNKNOW;
                 }
@@ -44,6 +47,8 @@ public class Producer {
                 return LocalTransactionState.COMMIT_MESSAGE;
             }
         });
+
+
         //启动事务生产者
         transactionMQProducer.start();
 

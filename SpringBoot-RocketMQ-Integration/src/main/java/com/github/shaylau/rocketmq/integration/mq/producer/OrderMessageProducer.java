@@ -37,15 +37,19 @@ public class OrderMessageProducer extends ProducerMessageAbstract<Order> {
 
             @Override
             public MessageHeaders getHeaders() {
+                //标签
                 return null;
             }
         };
+
         //主题
         String topic = "order";
         //标签
         String tags = "";
         //描述信息
         String destination = topic + ":" + tags;
+
+
         //发送信息
         rocketMQTemplate.send(destination, message);
     }

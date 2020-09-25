@@ -10,7 +10,7 @@ import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.exception.RemotingException;
 
 /**
- * 同步消息生产者
+ * 异步消息生产者
  *
  * @author ShayLau
  * @date 2020/9/10 9:48 上午
@@ -26,11 +26,13 @@ public class ASyncProducer {
 
         Message message = new Message();
 
-        message.setTopic("broker-a");
+        message.setTopic("topic-order");
 
-        message.setTags("tag1");
+       // message.setTags("tag1");
 
-        message.setBody("Hello World".getBytes());
+        message.setBody("Async message: Hello World".getBytes());
+
+
         producer.send(message, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
@@ -42,7 +44,10 @@ public class ASyncProducer {
                 System.out.println(e.getMessage());
             }
         });
-        producer.shutdown();
+
+
+
+        //producer.shutdown();
 
     }
 }

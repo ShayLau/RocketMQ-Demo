@@ -20,11 +20,18 @@ public class FilterProducer {
 
         messageProducer.setNamesrvAddr(Constants.nameSrv);
         messageProducer.start();
+
+
         String messageBody = "This is filter message";
         Message message = new Message("broker-a", "filter-tag-1", "Key", messageBody.getBytes());
         //设置一些属性，已提供过滤
+
+
+
         message.putUserProperty("name", "jack");
         message.putUserProperty("age", "19");
+
+
         System.out.println("开始发送消息：" + LocalDateTime.now());
         messageProducer.send(message);
         messageProducer.shutdown();

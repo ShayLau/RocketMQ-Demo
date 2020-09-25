@@ -31,6 +31,8 @@ public class FilterConsumer {
         //messageConsumer.subscribe("broker-a", MessageSelector.bySql("name = 'jack'"));
 
         messageConsumer.subscribe("broker-a", MessageSelector.bySql("age > 10 and name='jack' "));
+
+
         messageConsumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
             System.out.println("接收到消息：" + LocalDateTime.now());
             msgs.stream().forEach(messageExt -> System.out.println("consumeThread=" +

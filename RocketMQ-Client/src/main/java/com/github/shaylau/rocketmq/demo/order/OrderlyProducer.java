@@ -52,7 +52,7 @@ public class OrderlyProducer {
                     public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
                         Long orderId = (Long) arg;
                         long index = orderId % mqs.size();
-                        return mqs.get((int) index);
+                        return mqs.get(Long.valueOf(index).intValue());
                     }
                 }, orderStep.getOrderId());
 //                System.out.println(String.format("SendResult status:%s, queueId:%d, body:%s",

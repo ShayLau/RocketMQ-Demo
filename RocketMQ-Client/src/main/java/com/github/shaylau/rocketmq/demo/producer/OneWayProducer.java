@@ -19,11 +19,16 @@ public class OneWayProducer {
         producer.setNamesrvAddr(Constants.nameSrv);
         //启动 Product
         producer.start();
+
+
         Message message = new Message();
         message.setTopic("broker-a");
         message.setTags("tag1");
         message.setBody("Hello World".getBytes());
+
         producer.sendOneway(message);
+
+
         producer.shutdown();
     }
 }
